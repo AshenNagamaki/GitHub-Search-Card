@@ -6,7 +6,7 @@ const CardFloor = props => {
     const followersURL = `${props.homePageURLPart}/followers`;
     const reposURL = `${props.homePageURLPart}?tab=repositories`;
     const followingURL = `${props.homePageURLPart}/following`;
-
+    
     return (
     <div className={classes.CardFloor}>
         <ul className={classes.List}>
