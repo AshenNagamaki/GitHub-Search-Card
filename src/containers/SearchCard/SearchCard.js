@@ -1,10 +1,18 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useRef} from 'react';
 
 import classes from './SearchCard.module.css';
 
-const searchCard = props => {
+const GitHubAPI = 'https://api.github.com/users';
+
+const SearchCard = props => {
+    const inputUsername = useRef(null);
+    const [username, setUsername] = useState('AxiAxi');
+
     const keyPressHandler = event => {
-        event.key === 'Enter' ? console.log('Enter') : console.log('Not Enter')
+        if (event.key === 'Enter') {
+            inputUsername.current.focus();
+            setUsername(inputUsername.current.value);
+        } 
     }
 
     return (
@@ -12,10 +20,12 @@ const searchCard = props => {
             <input 
             className={classes.InputField} 
             type="text" 
-            placeholder="Just Type Username and Press Enter" 
+            placeholder="Just Type Username and Press Enter"
+            ref={inputUsername}
             onKeyPress={keyPressHandler}/>
+            {username}
         </div>
     )
 }
 
-export default searchCard;
+export default SearchCard;
