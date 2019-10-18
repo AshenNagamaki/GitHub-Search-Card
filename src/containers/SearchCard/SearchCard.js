@@ -14,7 +14,10 @@ const SearchCard = () => {
         userNameFromAPI: null,
         userLogin: null,
         userHomePageURL: null,
-        userAvatar: null
+        userAvatar: null,
+        userFollowers: null,
+        userPublicRepos: null,
+        userFollowing: null
     });
 
     useEffect(() => {
@@ -28,7 +31,10 @@ const SearchCard = () => {
                 userNameFromAPI: responseData.name,
                 userLogin: responseData.login,
                 userHomePageURL: responseData.html_url,
-                userAvatar: responseData.avatar_url
+                userAvatar: responseData.avatar_url,
+                userFollowers: responseData.followers,
+                userPublicRepos: responseData.public_repos,
+                userFollowing: responseData.following
             });
             setIsLoading(false);
             console.log(responseData); //TODO Delete
@@ -57,9 +63,12 @@ const SearchCard = () => {
             name={userData.userNameFromAPI} 
             login={userData.userLogin} 
             homePageURL={userData.userHomePageURL} 
-            avatar_url={userData.userAvatar}
-            loading={isLoading}/>
-            <CardFloor />
+            avatar_url={userData.userAvatar}/>
+            <CardFloor 
+            homePageURLPart={userData.userHomePageURL}
+            followers={userData.userFollowers}
+            repos={userData.userPublicRepos}
+            following={userData.userFollowing}/>
         </div>
     )
 }
