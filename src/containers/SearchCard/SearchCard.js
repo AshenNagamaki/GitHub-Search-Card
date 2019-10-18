@@ -8,7 +8,7 @@ const GitHubAPI = 'https://api.github.com/users';
 
 const SearchCard = () => {
     const inputUsername = useRef(null);
-    const [username, setUsername] = useState('AxiAxi');
+    const [username, setUsername] = useState('npm');
     const [userData, setUserData] = useState({
         userNameFromAPI: null,
         userLogin: null,
@@ -38,7 +38,6 @@ const SearchCard = () => {
                 userPublicRepos: responseData.public_repos,
                 userFollowing: responseData.following
             });
-            console.log(responseData); //TODO Delete
         }))
         return () => {
             abortController.abort();
