@@ -19,6 +19,15 @@ const CardHead = props => {
         locationPart = <h2 className={classes.Location}>Somewhere on Earth</h2>;
     }
 
+    let bioPart = null;
+    if (props.bio) {
+        bioPart = (
+            <p className={classes.Bio}>{`«${props.bio}»`}</p>
+        );
+    } else {
+        bioPart = <p className={classes.Bio}>Silence speaks it all...</p>
+    }
+
     return (
         <div className={classes.CardHead}>
             <a
@@ -36,6 +45,7 @@ const CardHead = props => {
                 <h2 className={classes.Username}>{props.name || props.login}</h2>
             </a>
             {locationPart}
+            {bioPart}
         </div>
     )
 }

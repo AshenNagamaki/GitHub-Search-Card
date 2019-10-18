@@ -18,11 +18,12 @@
 
 .Username {
     position: absolute;
+    width: 70%;
     margin: 0 auto;
     font-size: 30px;
     text-align: center;
     color: #25a2cc;
-    top: 58%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -34,7 +35,19 @@
     text-align: center;
     color: #25a2cc;
     opacity: 0.3;
-    top: 70%;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Bio {
+    position: absolute;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    color: #25a2cc;
+    opacity: 0.7;
+    top: 90%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
