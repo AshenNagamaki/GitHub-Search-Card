@@ -1,6 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 
 import CardHead from '../../components/CardHead/CardHead';
+import CardFloor from '../../components/CardFloor/CardFloor';
 import classes from './SearchCard.module.css';
 
 const GitHubAPI = 'https://api.github.com/users';
@@ -58,6 +59,7 @@ const SearchCard = () => {
             homePageURL={userData.userHomePageURL} 
             avatar_url={userData.userAvatar}
             loading={isLoading}/>
+            <CardFloor />
         </div>
     )
 }
