@@ -12,6 +12,7 @@ const SearchCard = () => {
     const inputUsername = useRef(null);
     const [username, setUsername] = useState('npm');
     const [isLoading, setIsLoading] = useState(false);
+    const [isOrganization, setIsOrganization] = useState(null);
     const [error, setError] = useState(null);
     const [userData, setUserData] = useState({
         userNameFromAPI: null,
@@ -33,6 +34,7 @@ const SearchCard = () => {
         .then(response => response.json())
         .then(responseData => {
             if (!responseData.message) {
+                responseData.type === 'Organization' ? setIsOrganization(true) : setIsOrganization(false);
                 setUserData({
                     userNameFromAPI: responseData.name,
                     userLogin: responseData.login,
@@ -40,9 +42,9 @@ const SearchCard = () => {
                     userAvatar: responseData.avatar_url,
                     userBio: responseData.bio,
                     userLocation: responseData.location,
-                    userFollowers: responseData.followers,
+                    userFollowers: responseData.type !== 'Organization' ? responseData.followers : 'Many',
                     userPublicRepos: responseData.public_repos,
-                    userFollowing: responseData.following
+                    userFollowing: responseData.type !== 'Organization' ? responseData.following : 'Many'
                 });
                 setError(null);
             } else {
@@ -82,7 +84,8 @@ const SearchCard = () => {
                 homePageURLPart={userData.userHomePageURL}
                 followers={userData.userFollowers}
                 repos={userData.userPublicRepos}
-                following={userData.userFollowing}/>
+                following={userData.userFollowing}
+                orgType={isOrganization}/>
             </React.Fragment>
         );
     } else {

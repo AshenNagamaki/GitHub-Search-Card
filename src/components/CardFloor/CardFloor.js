@@ -3,9 +3,9 @@ import React from 'react';
 import classes from './CardFloor.module.css';
 
 const CardFloor = props => {
-    const followersURL = `${props.homePageURLPart}/followers`;
+    const followersURL = props.orgType ? props.homePageURLPart : `${props.homePageURLPart}/followers`;
     const reposURL = `${props.homePageURLPart}?tab=repositories`;
-    const followingURL = `${props.homePageURLPart}/following`;
+    const followingURL = props.orgType ? props.homePageURLPart : `${props.homePageURLPart}/following`;
     
     return (
     <div className={classes.CardFloor}>
