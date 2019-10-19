@@ -68,7 +68,7 @@ const SearchCard = () => {
 
     let searchCardContent = null;
 
-    if (!isLoading || error) {
+    if (!isLoading) {
         searchCardContent = (
             <React.Fragment>
                 <CardHead 
