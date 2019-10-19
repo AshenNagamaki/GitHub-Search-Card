@@ -3,7 +3,7 @@
     height: 100px;
     background-image: linear-gradient(to bottom right, #48c6ef, #6f86d6);
     position: relative;
-    border-radius: 0 0 75px 25px;    
+    border-radius: 0 0 75px 25px;
     display: table;
 }
 

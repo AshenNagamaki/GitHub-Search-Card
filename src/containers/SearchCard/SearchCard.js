@@ -2,6 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 
 import CardHead from '../../components/CardHead/CardHead';
 import CardFloor from '../../components/CardFloor/CardFloor';
+import ErrorCard from '../../components/ErrorCard/ErrorCard';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import classes from './SearchCard.module.css';
 
@@ -11,6 +12,7 @@ const SearchCard = () => {
     const inputUsername = useRef(null);
     const [username, setUsername] = useState('npm');
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
     const [userData, setUserData] = useState({
         userNameFromAPI: null,
         userLogin: null,
@@ -28,21 +30,30 @@ const SearchCard = () => {
         const abortController = new AbortController();
         setIsLoading(true);
         fetch(url, {signal: abortController.signal})
-        .then(response => response.json()
+        .then(response => response.json())
         .then(responseData => {
-            setUserData({
-                userNameFromAPI: responseData.name,
-                userLogin: responseData.login,
-                userHomePageURL: responseData.html_url,
-                userAvatar: responseData.avatar_url,
-                userBio: responseData.bio,
-                userLocation: responseData.location,
-                userFollowers: responseData.followers,
-                userPublicRepos: responseData.public_repos,
-                userFollowing: responseData.following
-            });
+            if (!responseData.message) {
+                setUserData({
+                    userNameFromAPI: responseData.name,
+                    userLogin: responseData.login,
+                    userHomePageURL: responseData.html_url,
+                    userAvatar: responseData.avatar_url,
+                    userBio: responseData.bio,
+                    userLocation: responseData.location,
+                    userFollowers: responseData.followers,
+                    userPublicRepos: responseData.public_repos,
+                    userFollowing: responseData.following
+                });
+                setError(null);
+            } else {
+                setError(responseData.message);
+            }
             setIsLoading(false);
-        }))
+        })
+        .catch(responseError => {
+            setIsLoading(false);
+            setError(responseError);
+        })
         return () => {
             abortController.abort();
         }
@@ -57,7 +68,7 @@ const SearchCard = () => {
 
     let searchCardContent = null;
 
-    if (!isLoading) {
+    if (!isLoading || error) {
         searchCardContent = (
             <React.Fragment>
                 <CardHead 
@@ -86,7 +97,7 @@ const SearchCard = () => {
             placeholder="Just Type Username and Press Enter"
             ref={inputUsername}
             onKeyPress={keyPressHandler}/>
-            {searchCardContent}
+            {error ? <ErrorCard /> : searchCardContent}
         </div>
     )
 }

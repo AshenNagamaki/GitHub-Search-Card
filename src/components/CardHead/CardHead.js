@@ -16,7 +16,7 @@ const CardHead = props => {
             </a>
         );
     } else {
-        locationPart = <h2 className={classes.Location}>Somewhere on Earth</h2>;
+        locationPart = <h2 className={classes.Location} style={{cursor: "default"}}>Somewhere on Earth</h2>;
     }
 
     let bioPart = null;
