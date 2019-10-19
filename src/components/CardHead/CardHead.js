@@ -4,6 +4,7 @@ import classes from './CardHead.module.css';
 
 const CardHead = props => {    
     let locationPart = null;
+
     if (props.location) {
         let locationURL = `https://www.google.com/maps/place/${props.location}`;
         locationPart = (
@@ -20,6 +21,7 @@ const CardHead = props => {
     }
 
     let bioPart = null;
+    
     if (props.bio) {
         bioPart = (
             <p className={classes.Bio}>{`«${props.bio}»`}</p>

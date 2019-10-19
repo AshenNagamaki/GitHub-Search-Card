@@ -10,7 +10,7 @@ const GitHubAPI = 'https://api.github.com/users';
 
 const SearchCard = () => {
     const inputUsername = useRef(null);
-    const [username, setUsername] = useState('npm');
+    const [username, setUsername] = useState('google');
     const [isLoading, setIsLoading] = useState(false);
     const [isOrganization, setIsOrganization] = useState(null);
     const [error, setError] = useState(null);
