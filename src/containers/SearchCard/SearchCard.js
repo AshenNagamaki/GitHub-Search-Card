@@ -2,6 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 
 import CardHead from '../../components/CardHead/CardHead';
 import CardFloor from '../../components/CardFloor/CardFloor';
+import Spinner from '../../components/UI/Spinner/Spinner';
 import classes from './SearchCard.module.css';
 
 const GitHubAPI = 'https://api.github.com/users';
@@ -9,6 +10,7 @@ const GitHubAPI = 'https://api.github.com/users';
 const SearchCard = () => {
     const inputUsername = useRef(null);
     const [username, setUsername] = useState('npm');
+    const [isLoading, setIsLoading] = useState(false);
     const [userData, setUserData] = useState({
         userNameFromAPI: null,
         userLogin: null,
@@ -24,6 +26,7 @@ const SearchCard = () => {
     useEffect(() => {
         const url = `${GitHubAPI}/${username}`;
         const abortController = new AbortController();
+        setIsLoading(true);
         fetch(url, {signal: abortController.signal})
         .then(response => response.json()
         .then(responseData => {
@@ -38,6 +41,7 @@ const SearchCard = () => {
                 userPublicRepos: responseData.public_repos,
                 userFollowing: responseData.following
             });
+            setIsLoading(false);
         }))
         return () => {
             abortController.abort();
@@ -48,7 +52,30 @@ const SearchCard = () => {
         if (event.key === 'Enter') {
             inputUsername.current.focus();
             setUsername(inputUsername.current.value);
-        } 
+        }
+    }
+
+    let searchCardContent = null;
+
+    if (!isLoading) {
+        searchCardContent = (
+            <React.Fragment>
+                <CardHead 
+                name={userData.userNameFromAPI} 
+                login={userData.userLogin} 
+                homePageURL={userData.userHomePageURL} 
+                avatar_url={userData.userAvatar}
+                location={userData.userLocation}
+                bio={userData.userBio}/>
+                <CardFloor 
+                homePageURLPart={userData.userHomePageURL}
+                followers={userData.userFollowers}
+                repos={userData.userPublicRepos}
+                following={userData.userFollowing}/>
+            </React.Fragment>
+        );
+    } else {
+        searchCardContent = <Spinner>Loading...</Spinner>
     }
 
     return (
@@ -59,18 +86,7 @@ const SearchCard = () => {
             placeholder="Just Type Username and Press Enter"
             ref={inputUsername}
             onKeyPress={keyPressHandler}/>
-            <CardHead 
-            name={userData.userNameFromAPI} 
-            login={userData.userLogin} 
-            homePageURL={userData.userHomePageURL} 
-            avatar_url={userData.userAvatar}
-            location={userData.userLocation}
-            bio={userData.userBio}/>
-            <CardFloor 
-            homePageURLPart={userData.userHomePageURL}
-            followers={userData.userFollowers}
-            repos={userData.userPublicRepos}
-            following={userData.userFollowing}/>
+            {searchCardContent}
         </div>
     )
 }
